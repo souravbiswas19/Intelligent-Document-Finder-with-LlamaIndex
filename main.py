@@ -2,6 +2,12 @@
 import time
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
+from rag_query import generate_answer
+
+# def response_generator(response):
+#     for word in response.split():
+#         yield word + " "
+#         time.sleep(0.05)
 
 with st.sidebar:
     body = "🤖Intelligent Document Finder📃🔍"
@@ -14,28 +20,12 @@ with st.sidebar:
     - [HuggingFace](<https://huggingface.co/>) LLM model
     
     ''')
-    # st.button("Reload from Google Drive", type="primary")
-    # if st.button('Say hello'):
-    #     st.write('Why hello there')
-    # else:
-    #     st.write('Goodbye')
     add_vertical_space(5)
     add_vertical_space(5)
     st.write('Made with ❤️ by [Sourav Biswas](<https://github.com/souravbiswas19>)')
 st.header("🤖Intelligent Document Finder📃🔍")
-# st.header("Your Query Here👇🏽")
-# title = st.text_input('')
-# print(title)
+
 prompt = st.chat_input("Say something")
 if prompt:
-    """
-    Reload the google drive after every prompt
-    1. Will increase the processing time
-    2. Will check if there is any new documents that has been uploaded in the folder
-    """
-
-    """
-    Query to be passed to the function to fetch the answer to the query
-    """
-    st.write(f"User has sent the following prompt: {prompt}")
-
+    st.write(f"Question: {prompt}")
+    st.write(f"Answer: {generate_answer(prompt)}")
