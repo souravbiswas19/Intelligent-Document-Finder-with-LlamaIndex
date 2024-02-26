@@ -15,5 +15,8 @@ if not os.path.exists(PERSIST_DIR):
     index.storage_context.persist(persist_dir=PERSIST_DIR)
 else:
     #load the existing index
+    index = VectorStoreIndex.from_documents(docs, embed_model=embed_model)
+    #store for it for later
+    index.storage_context.persist(persist_dir=PERSIST_DIR)
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
     index = load_index_from_storage(storage_context)
