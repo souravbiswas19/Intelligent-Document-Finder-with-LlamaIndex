@@ -1,5 +1,4 @@
 import os
-from config import config
 from google_drive_reader import docs
 from gemini_llm import llm, embed_model
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
