@@ -38,3 +38,4 @@ if prompt:
     Query to be passed to the function to fetch the answer to the query
     """
     st.write(f"User has sent the following prompt: {prompt}")
+
