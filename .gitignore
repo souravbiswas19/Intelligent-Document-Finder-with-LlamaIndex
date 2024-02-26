@@ -2,4 +2,4 @@ env/
 __pycache__/
 .env
 /storage
-credentials.json
+/credentials.json
