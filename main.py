@@ -3,11 +3,8 @@ import time
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from rag_query import generate_answer
+from extract_metadata import extract_metadata_from_response
 
-# def response_generator(response):
-#     for word in response.split():
-#         yield word + " "
-#         time.sleep(0.05)
 
 with st.sidebar:
     body = "🤖Intelligent Document Finder📃🔍"
@@ -28,4 +25,7 @@ st.header("🤖Intelligent Document Finder📃🔍")
 prompt = st.chat_input("Say something")
 if prompt:
     st.write(f"Question: {prompt}")
-    st.write(f"Answer: {generate_answer(prompt)}")
+    response = generate_answer(prompt)
+    meta_data = extract_metadata_from_response(response)
+    st.write(f"Answer: {response}")
+    st.write(f"Source: {meta_data}")
