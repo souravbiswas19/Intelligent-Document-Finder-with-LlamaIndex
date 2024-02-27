@@ -94,13 +94,19 @@ To set up the project environment, follow these steps:
     pip install -r requirements.txt
     ```
 
-5. Setting up the `.env` file is provided in the `.env.examples` file in the Project directory. Assign your GOOGLE_API_KEY, HF_TOKEN, and OPENAIR_API_KEY, and save the `.env.examples` file as `.env` file only. If you don't have a GOOGLE_API_KEY generate one from here [Google API Key Documentation] (#google-cloud-integration)
+5. Setting up the `.env` file is provided in the `.env.examples` file in the Project directory. Assign the `FOLDER_ID` of your respective Google Drive Folder. Assign your GOOGLE_API_KEY, HF_TOKEN, and OPENAIR_API_KEY as per the requirement of services used, and save the `.env.examples` file as `.env` file only. If you don't have a GOOGLE_API_KEY generate one from here [Google API Key Documentation] (#google-cloud-integration)
 
     ```bash
     GOOGLE_API_KEY = "<YOUR GOOGLE API KEY>"
     OPENAI_API_KEY = "<YOUR OPENAI KEY>"
     HF_TOKEN = "<YOUR HUGGING FACE TOKEN>"
+    FOLDER_ID = "<YOUR FOLDER ID>"
     ```
+    
+    **How can we get a FOLDER_ID?**
+
+    Open the Google Drive Folder you want, copy the url. The URL should look like this: `https://drive.google.com/drive/folders/<FOLDER_ID>`.
+    The `FOLDER_ID` shall be string with a combination of alphanumeric characters. Copy the string and paste the `FOLDER_ID` in the `.env` file
 
 6. Createa credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
