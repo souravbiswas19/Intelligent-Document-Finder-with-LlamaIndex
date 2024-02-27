@@ -4,6 +4,7 @@ from gemini_llm import llm, embed_model
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
 from llama_index.core import Settings
 
+
 Settings.llm = llm
 Settings.embed_model = embed_model
 PERSIST_DIR = "./storage"
