@@ -77,7 +77,7 @@ git clone https://github.com/souravbiswas19/Intelligent-Document-Finder-with-Lla
 ### Setup Python Virtual Environment
 To set up the project environment, follow these steps:
 
-1. Ensure you have Python 3.8 or higher installed on your system. This project has been run on `Python 3.11`.
+1. Ensure you have Python 3.11.8 installed. This project has been run on `Python 3.11.8`. Download the python 
 
 2. Create a virtual environment using `venv`.
 
@@ -85,7 +85,13 @@ To set up the project environment, follow these steps:
     python -m venv <virtual-environment-name>
     ```
 
-3. Actiavte the virtual environment using:
+3. Update the pip.
+
+    ```bash
+    python.exe -m pip install --upgrade pip
+    ```
+
+4. Actiavte the virtual environment using:
     
     A. **Git Bash** - Navigate to the folder containing the virtual environment in Git Bash and run the command.
     ```bash
@@ -102,13 +108,13 @@ To set up the project environment, follow these steps:
     <venv>\Scripts\activate.psl
     ```
 
-4.  Install the dependencies listed in requirements.txt using pip:
+5.  Install the dependencies listed in requirements.txt using pip:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-5. Setting up the `.env` file is provided in the `.env.examples` file in the Project directory. Assign the `FOLDER_ID` of your respective Google Drive Folder. Assign your GOOGLE_API_KEY, HF_TOKEN, and OPENAIR_API_KEY as per the requirement of services used, and save the `.env.examples` file as `.env` file only. If you don't have a GOOGLE_API_KEY generate one from here [Google API Key Documentation] (#google-cloud-integration)
+6. Setting up the `.env` file is provided in the `.env.examples` file in the Project directory. Assign the `FOLDER_ID` of your respective Google Drive Folder. Assign your GOOGLE_API_KEY, HF_TOKEN, and OPENAIR_API_KEY as per the requirement of services used, and save the `.env.examples` file as `.env` file only. If you don't have a GOOGLE_API_KEY generate one from here [Google API Key Documentation] (#google-cloud-integration)
 
     ```bash
     GOOGLE_API_KEY = "<YOUR GOOGLE API KEY>"
@@ -122,9 +128,9 @@ To set up the project environment, follow these steps:
     Open the Google Drive Folder you want, copy the url. The URL should look like this: `https://drive.google.com/drive/folders/<FOLDER_ID>`.
     The `FOLDER_ID` shall be string with a combination of alphanumeric characters. Copy the string and paste the `FOLDER_ID` in the `.env` file
 
-6. Create a credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
+7. Create a credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
-6. To run the Intelligent Document Finder system, execute the following command in the Git bash/Command Prompt/Powershell by activating the environment as mentioned above:
+8. To run the Intelligent Document Finder system, execute the following command in the Git bash/Command Prompt/Powershell by activating the environment as mentioned above:
 
     ```bash
     streamlit run main.py
