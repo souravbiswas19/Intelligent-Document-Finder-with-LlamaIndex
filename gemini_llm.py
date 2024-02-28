@@ -1,4 +1,4 @@
-"""This module is responsible for Initializing LLM, Embedding and Prompts"""
+"""This module is responsible for initializing LLM, Embedding and Prompts"""
 # Necessary libraries are being imported
 import os
 from config import config

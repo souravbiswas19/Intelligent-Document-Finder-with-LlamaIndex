@@ -45,20 +45,34 @@ snippets along with comprehensive metadata.
 
 ## Design and Implementation
 
+1. Interface of the Intelligent Document Finder
+
+![Frontend](/logos/frontend.png)
+
+2. Result of the Intelligent Document Finder
+
+![Result](/logos/result.png)
+
 ## Project Structure
 The project structure consists of the following files:
 
-- `config.py`: 
-- `chroma_db.py`: 
-- `llm_answer.py`: 
-- `pdf_handler.py`: 
-- `main.py`: 
+- `config.py`: This python file implements the env variables for API coniguration
+- `extract_metadata.py`: This python file is for extraction of metadata
+- `gemini_llm.py`: This module is responsible for initializing LLM, Embedding and Prompts
+- `google_drive_reader.py`: This python module implements the access of files from the Google Drive Folder
+- `main.py`: This a python file for frontend of the Intelligent Document Finder using LlamaIndex
+- `rag_query.py`: This python module performs query generation
+- `store_vector_index.py`: This python module performs the function of storing the vectors along with the implementation of TitleExtractor
 - `requirements.txt`: 
 
 
 ## Installation and Executation
 ### Clone the Project Repository
-Clone the repository or download the project files. Navigate to the project directory. Install the dependencies listed in requirements.txt using pip:
+Clone the repository or download the project files. Navigate to the project directory by using:
+    
+```bash
+git clone https://github.com/souravbiswas19/Intelligent-Document-Finder-with-LlamaIndex.git
+```
 
 ### Setup Python Virtual Environment
 To set up the project environment, follow these steps:
@@ -108,7 +122,7 @@ To set up the project environment, follow these steps:
     Open the Google Drive Folder you want, copy the url. The URL should look like this: `https://drive.google.com/drive/folders/<FOLDER_ID>`.
     The `FOLDER_ID` shall be string with a combination of alphanumeric characters. Copy the string and paste the `FOLDER_ID` in the `.env` file
 
-6. Createa credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
+6. Create a credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
 6. To run the Intelligent Document Finder system, execute the following command in the Git bash/Command Prompt/Powershell by activating the environment as mentioned above:
 
