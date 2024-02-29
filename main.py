@@ -23,26 +23,29 @@ with st.sidebar:
     st.write('Made with ❤️ by [Sourav Biswas](<https://github.com/souravbiswas19>)')
 st.header("🤖Intelligent Document Finder📃🔍")
 
-# Front end part for the passing of the prompt and generating the answer and metadata
-prompt = st.chat_input("Say something")
-if prompt:
-    # Template for the Question section
-    st.header("Question:")
-    # Displaying the prompt question
-    st.write(prompt)
-    # Generatin the answer from the prompt
-    response = generate_answer(prompt)
-    # Extracting the metadata from the response/answer
-    meta_data = extract_metadata_from_response(response)
-    # Displaying the answer
-    st.header("Answer:")
-    # Displaying the response returned by the query engine
-    st.write(response.response)
-    # Displaying the Metadata
-    st.header("Source:")
-    # Displaying the metadata - document_title - Title
-    st.write(f"Document Title: {meta_data['document_title']}")
-    # Displaying the metadata - file_name - File Name
-    st.write(f"File Name: {meta_data['file name']}")
-    # Displaying the metadata - page_lable -> Page Number
-    st.write(f"Page Number: {meta_data['page_label']}")
+try:
+    # Front end part for the passing of the prompt and generating the answer and metadata
+    prompt = st.chat_input("Say something")
+    if prompt:
+        # Template for the Question section
+        st.header("Question:")
+        # Displaying the prompt question
+        st.write(prompt)
+        # Generatin the answer from the prompt
+        response = generate_answer(prompt)
+        # Extracting the metadata from the response/answer
+        meta_data = extract_metadata_from_response(response)
+        # Displaying the answer
+        st.header("Answer:")
+        # Displaying the response returned by the query engine
+        st.write(response.response)
+        # Displaying the Metadata
+        st.header("Source:")
+        # Displaying the metadata - document_title - Title
+        st.write(f"Document Title: {meta_data['document_title']}")
+        # Displaying the metadata - file_name - File Name
+        st.write(f"File Name: {meta_data['file name']}")
+        # Displaying the metadata - page_lable -> Page Number
+        st.write(f"Page Number: {meta_data['page_label']}")
+except RuntimeError as e:
+    st.write(f"Error occurred: {e}")
