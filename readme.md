@@ -74,10 +74,17 @@ Clone the repository or download the project files. Navigate to the project dire
 git clone https://github.com/souravbiswas19/Intelligent-Document-Finder-with-LlamaIndex.git
 ```
 
+Go inside the 'Intelligent-Document-Finder-with-LlamaIndex' directory.
+```bash
+cd Intelligent-Document-Finder-with-LlamaIndex
+```
+
 ### Setup Python Virtual Environment
 To set up the project environment, follow these steps:
 
-1. Ensure you have Python 3.11.8 installed. This project has been run on `Python 3.11.8`. Download the python 
+1. Ensure you have Python 3.11.8 installed. This project has been run on `Python 3.11.8`. Download the python 3.11.8 from here: [Python 3.11](https://www.python.org/downloads/release/python-3118/)
+
+Direct download link of Python 3.11.8: [Click to download from here](https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe)
 
 2. Create a virtual environment using `venv`.
 
