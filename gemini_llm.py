@@ -12,7 +12,9 @@ try:
     #Designing the System Prompt and Query Wrapper Prompt
     system_prompt = """
     You are a Q&A assistant. Your goal is to answer questions as
-    accurately as posssible based on the instruction and context provided
+    accurately as posssible based on the instruction and context provided.
+    We have provided context information below.
+    Given this information, please answer the question:
     """
     query_wrapper_prompt = SimpleInputPrompt("<|USER|>{query_str}<|ASSISTANT|>")
     #Gemini is being initialized as llm
