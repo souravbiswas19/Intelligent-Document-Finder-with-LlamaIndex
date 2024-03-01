@@ -6,10 +6,11 @@
 ### 1. [Overview](#overview)
 ### 2. [Objectives](#objectives)
 ### 3. [Tech stack](#tech-stack)
-### 4. [Design and Implementation](#design-and-implementation)
-### 5. [Project Structure](#project-structure)
-### 6. [Installation and Execution](#installation-and-executation) 
-### 7. [Google Cloud Credentials for Google Drive Integration with Llama Index](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
+### 4. [System Workflow]
+### 5. [Design and Implementation](#design-and-implementation)
+### 6. [Project Structure](#project-structure)
+### 7. [Installation and Execution](#installation-and-executation) 
+### 8. [Google Cloud Credentials for Google Drive Integration with Llama Index](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
 
 ## Overview
@@ -43,6 +44,10 @@ snippets along with comprehensive metadata.
 #### 4. [Huggingface](https://huggingface.co/)
 #### 5. [Streamlit](https://docs.streamlit.io/)
 
+## System Workflow
+
+![Flowchart](/logos/Retrieved%20Context.png)
+
 ## Design and Implementation
 
 1. Interface of the Intelligent Document Finder
@@ -60,6 +65,7 @@ The project structure consists of the following files:
 - `extract_metadata.py`: This python file is for extraction of metadata
 - `gemini_llm.py`: This module is responsible for initializing LLM, Embedding and Prompts
 - `google_drive_reader.py`: This python module implements the access of files from the Google Drive Folder
+- `instance_flag.py`: Store the instances of file id_ of new and old documents for checking which documents are uploaded recently
 - `main.py`: This a python file for frontend of the Intelligent Document Finder using LlamaIndex
 - `rag_query.py`: This python module performs query generation
 - `store_vector_index.py`: This python module performs the function of storing the vectors along with the implementation of TitleExtractor
@@ -134,7 +140,7 @@ Direct download link of Python 3.11.8: [Click to download from here](https://www
 
     Open the Google Drive Folder you want, copy the url. The URL should look like this: `https://drive.google.com/drive/folders/<FOLDER_ID>`.
     The `FOLDER_ID` shall be string with a combination of alphanumeric characters. Copy the string and paste the `FOLDER_ID` in the `.env` file.
-    Make sure to keep the share mode of the folder as `Anyone with the link`.
+    **Make sure to keep the share mode of the folder as `Anyone with the link`.**
 
 7. Create a credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
