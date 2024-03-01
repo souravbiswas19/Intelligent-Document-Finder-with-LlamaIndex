@@ -2,6 +2,8 @@
 
 ![Intelligent Document Finder](/logos/frontend.png)
 
+- ### **Demonstration Video:** [Video Link](https://drive.google.com/drive/folders/1Wq2-ABC6EsmYIvGRnTWptNC2aS4L5Ac1?usp=sharing)
+
 ## Contents:
 ### 1. [Overview](#overview)
 ### 2. [Objectives](#objectives)
