@@ -1,9 +1,10 @@
 """This a python file for frontend of the Intelligent Document Finder using LlamaIndex"""
 #Necessary files are being fetched
 import streamlit as st
+import rag_query
 from streamlit_extras.add_vertical_space import add_vertical_space
-from rag_query import generate_answer
 from extract_metadata import extract_metadata_from_response
+from check_folder import check_google_drive_folder
 
 # Sidebar for the description of the project
 with st.sidebar:
@@ -32,7 +33,7 @@ try:
         # Displaying the prompt question
         st.write(prompt)
         # Generatin the answer from the prompt
-        response = generate_answer(prompt)
+        response = rag_query.generate_answer(prompt)
         # Extracting the metadata from the response/answer
         meta_data = extract_metadata_from_response(response)
         # Displaying the answer
@@ -47,6 +48,7 @@ try:
         st.write(f"File Name: {meta_data['file name']}")
         # Displaying the metadata - page_lable -> Page Number
         st.write(f"Page Number: {meta_data['page_label']}")
+        check_google_drive_folder()
 except RuntimeError as e:
     st.write(f"Error occurred: {e}")
 # End of File
