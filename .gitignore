@@ -4,3 +4,5 @@ __pycache__/
 /storage
 /credentials.json
 /myenv
+/os_environment.py
+/access_os_environment.py

@@ -1,11 +1,12 @@
 """This python module performs query generation"""
-from store_vector_index import store_index
+from store_vector_index import load_index
+from gemini_llm import llm
 # Error Handling
-def generate_answer(prompt):
+def generate_answer(prompt, folder_id):
     """Generates the query as per the prompt given"""
     # Query Engine is being initialized
-    index = store_index()
-    query_engine = index.as_query_engine()
+    index = load_index(folder_id=folder_id)
+    query_engine = index.as_query_engine(llm=llm)
     # Response is being generated as per the prompt
     response = query_engine.query(prompt)
     # Response is being returned
