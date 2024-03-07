@@ -3,17 +3,12 @@ import rag_query
 from google_drive_reader import load_data
 from store_vector_index import store_index
 from check_folder import check_google_drive_folder
-from fastapi import FastAPI, status, HTTPException
-
-
-
 import Authentication.schemas as schemas
 import Authentication.models as models
-from datetime import datetime 
 from Authentication.models import User
 from Authentication.database import Base, SessionLocal, engine
 from sqlalchemy.orm import Session
-from fastapi import FastAPI, Depends, HTTPException,status
+from fastapi import FastAPI, Depends, HTTPException,status, BackgroundTasks
 from Authentication.auth_bearer import JWTBearer
 from functools import wraps
 from Authentication.utils import create_access_token, get_hashed_password, verify_password
@@ -80,10 +75,11 @@ def set_link(link: str):
 @app.post("/getquery", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
 def query(question: str):
     """Query the function version."""
+    backgroundtask = BackgroundTasks()
     try:
         folder_id=os.getenv("FOLDER_ID")
         print(folder_id)
-        check_google_drive_folder(docs=document, folder_id=folder_id)
+        backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
         response = rag_query.generate_answer(question,folder_id)
         #returns the answer after successful search from the pdf
         return {"answer": response}
