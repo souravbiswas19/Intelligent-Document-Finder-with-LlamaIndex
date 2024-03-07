@@ -38,7 +38,7 @@ def load_new_data(old_docs, all_docs):
     return new_docs # new files only returned
 
 # Handling exception if folder cannot be accessed
-try:    
+try:
     # load_data function is being called and list of documents is being stored
     print("Data Loading Started...") # print statement before loading the data
     docs = load_data(folder_id=config['FOLDER_ID'])
@@ -67,6 +67,6 @@ try:
         index.storage_context.persist(persist_dir=PERSIST_DIR)
         print("Indexing of node done successfully.")
 except Exception as e: # If folder cannot be accessed exception is raised
-    print(f"Error occurred while loading data from Google Drive: {e}") # Prinitng the exception
+    print(f"Error occurred while loading data from Google Drive: {e} Please keep your Google Drive file access mode private") # Prinitng the exception
     docs = None
 # End of File
