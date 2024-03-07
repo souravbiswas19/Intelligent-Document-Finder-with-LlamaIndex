@@ -4,8 +4,7 @@ the vectors along with the implementation of TitleExtractor
 """
 #importing the necessary libraries
 import os
-#from config import config
-# from google_drive_reader import docs, load_data, load_new_data
+from instance_flag import old_file_id
 from gemini_llm import llm, embed_model
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage, Settings
 from llama_index.core.extractors import TitleExtractor
@@ -21,6 +20,7 @@ try:
         index = load_index_from_storage(storage_context)
         print("Index Loading Done")
         return index
+    
     def store_index(folder_id, document):
         """Fucntion to store and return the index using VectorStoreIndex"""
         #Initializing the LLM model, embedding model and chunk size
@@ -49,6 +49,8 @@ try:
             #storing the reloaded index
             print("Index Checking Started...") # print statement before fetching Index
             # Loading the index from PERSIST_DIR
+            for i in document:
+                old_file_id.add(i.id_)
             storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
             index = load_index_from_storage(storage_context)
             # reloading the Google Drive Folder
@@ -60,7 +62,7 @@ try:
             #     print("New Files found. Indexing Started...") # print statement before fetching Index
             #     new_nodes = pipeline.run(documents=new_docs, in_place=True, show_progress=True)
             #     index.insert_nodes(new_nodes)
-            # print("Index Checking Successful.")
+            print("Index Checking Successful.")
         return index
 except Exception as e:
     # Error handling during indexing
