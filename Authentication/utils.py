@@ -5,7 +5,7 @@ from typing import Union, Any
 import jwt
 from decouple import config
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 3000
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRE_MINUTES = 600 * 24 * 7 # 7 days
 ALGORITHM = config("ALGORITHM")
 JWT_SECRET_KEY = config("JWT_SECRET_KEY")   # should be kept secret
