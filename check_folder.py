@@ -19,7 +19,7 @@ def check_google_drive_folder(docs,folder_id):
     text_splitter = SentenceSplitter(separator="\n",chunk_size=1024, chunk_overlap=20)
     title_extractor = TitleExtractor(nodes=5)
     #Initilizing the pipeline with the transformations parameter
-    pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor])
+    pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, embed_model])
     #Running the pipeline for storing the processed docuements in nodes
     #Initializing the PERSISTENT DIRECTORY path
     PERSIST_DIR = f"./storage/{folder_id}"
