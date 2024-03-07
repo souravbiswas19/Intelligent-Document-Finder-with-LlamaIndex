@@ -144,6 +144,34 @@ The project structure consists of the following files:
 - `stream.py` : Python file for frontend implementation using streamlit
 - `utils.py` : Python utility function for hashing password, verifying password, and generating access tokens.
 
+## API Endpoints
+- SignUp
+    - **Method**: `POST`
+    - **URL**: `/register`
+    - **Parameters**: `user: schemas.UserCreate` for sending the user details and `session: Session = Depends(get_session)` for sending the database session
+    - Output: For successful registration of users -  `user created successfully` is returned. Along with it Access Token is generated.  If email id already exists then `Email already registered` is returned.
+    - **Description**: Takes up user details and database session as input and stores the details to the database, generates the access token and provides an output if the user is registered.
+- Login
+    - **Method**: `POST`
+    - **URL**: `/login`
+    - **Parameters**: `request: schemas.Logindetails` for sending the user login details as email id and password and `db: Session = Depends(get_session)` for connecting to the database session
+    - **Output**: For successful login of users -  Login Successful is returned. If email id already exists then exception Incorrect mail id or incorrect password exception is raised
+    - **Description**: Takes up user login details and database session as input and stores the details to the database and provides login successful message
+
+- Set Link
+    - **Method**: `POST`
+    - **URL**: `/setlink`
+    - **Parameters**: `link` for accessing the google drive folder along with it proper authentication is required using JWT Tokens
+    - **Output**: After data is loaded `Docs successfully loaded and Indexing done successfully`
+    - **Description**: Loads the data from the google drive folder and indexes it.
+
+- Get the response from llm
+    - **Method**: `POST`
+    - **URL**: `/getquery`
+    - **Parameters**: `question` for accessing the question and returning the response and the link will be accessed only if  along with it proper authentication is required using JWT Tokens
+    - **Output**: The query will be searched and returned in the response.
+    - **Description**: Accepts the query, searches the vector database using LLM and then provides the response.
+
 ## Installation and Executation
 ### Clone the Project Repository
 Clone the repository or download the project files. Navigate to the project directory by using:
