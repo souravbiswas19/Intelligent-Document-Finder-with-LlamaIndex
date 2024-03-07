@@ -1,3 +1,4 @@
+
 import jwt
 from jwt.exceptions import InvalidTokenError
 from fastapi import FastAPI, Depends, HTTPException,status
@@ -8,10 +9,8 @@ from decouple import config
 import time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30  # 30 minutes
-REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7 # 7 days
 ALGORITHM = config("ALGORITHM")
 JWT_SECRET_KEY = config("JWT_SECRET_KEY")   # should be kept secret
-#JWT_REFRESH_SECRET_KEY = config("JWT_REFRESH_SECRET_KEY") 
 
 def decodeJWT(jwtoken: str):
     try:
