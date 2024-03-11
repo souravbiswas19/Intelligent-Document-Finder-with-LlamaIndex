@@ -57,10 +57,10 @@ def login(request: schemas.Logindetails, db: Session = Depends(get_session), ):
     }
 
 @app.post("/setlink", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
-def set_link(link: str):
+def set_link(request: schemas.Link):
     """Query the function version."""
     format_google = "https://drive.google.com/drive/folders/"
-    folder_id = link[-(len(link)-len(format_google)):]
+    folder_id = request.link[-(len(request.link)-len(format_google)):]
     os.environ["FOLDER_ID"]=folder_id
     try:
         folder_id=os.getenv("FOLDER_ID")
