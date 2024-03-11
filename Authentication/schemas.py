@@ -23,3 +23,6 @@ class TokenCreate(BaseModel):
     access_token:str = Field(default=None)
     refresh_token:str = Field(default=None)
     created_date:datetime.datetime
+
+class Link(BaseModel):
+    link:str = Field(default=None)
