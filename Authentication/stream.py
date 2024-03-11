@@ -3,7 +3,6 @@ import streamlit as st
 import requests
 # Create an empty container
 placeholder = st.empty()
-
 # Insert a form in the container
 with st.sidebar:
     options = st.selectbox('Login/Register',('Register', 'Login'))
@@ -14,7 +13,6 @@ with st.sidebar:
             email = st.text_input("Email")
             password = st.text_input("Password", type="password")
             submit = st.form_submit_button("Signup")
-
         user_signup_details = {
         "username": name,
         "email": email,
@@ -24,7 +22,6 @@ with st.sidebar:
         "email": email,
         "password": password
         }
-
         if submit:
             placeholder = st.empty()
             res = requests.post(url="http://127.0.0.1:8000/register", data=json.dumps(user_signup_details))
