@@ -64,7 +64,9 @@ def set_link(link: str):
     os.environ["FOLDER_ID"]=folder_id
     try:
         folder_id=os.getenv("FOLDER_ID")
+        print("Data loading Google Drive...")
         docs = load_data(folder_id)
+        print("Data loading Done.")
         document=docs
         store_index(folder_id, docs)
         return {"Response": "Docs successfully loaded and Indexing done successfully"}

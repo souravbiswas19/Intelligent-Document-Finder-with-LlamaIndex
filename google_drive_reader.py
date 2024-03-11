@@ -3,7 +3,7 @@
 #import os
 from instance_flag import old_file_id, new_file_id
 from llama_index.readers.google import GoogleDriveReader
-from gemini_llm import llm, embed_model
+from gemini_llm import load_Gemini, load_embedding_model
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage, Settings
 from llama_index.core.extractors import TitleExtractor
 from llama_index.core.node_parser import SentenceSplitter
