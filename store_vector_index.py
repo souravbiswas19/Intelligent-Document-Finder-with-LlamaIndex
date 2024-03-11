@@ -5,7 +5,7 @@ the vectors along with the implementation of TitleExtractor
 #importing the necessary libraries
 import os
 from instance_flag import old_file_id
-from gemini_llm import llm, embed_model
+from gemini_llm import load_Gemini, load_embedding_model
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage, Settings
 from llama_index.core.extractors import TitleExtractor
 from llama_index.core.node_parser import SentenceSplitter
@@ -24,14 +24,14 @@ try:
     def store_index(folder_id, document):
         """Fucntion to store and return the index using VectorStoreIndex"""
         #Initializing the LLM model, embedding model and chunk size
-        Settings.llm = llm
-        Settings.embed_model = embed_model
+        Settings.llm = load_Gemini()
+        Settings.embed_model = load_embedding_model()
         Settings.chunk_size = 1024    
         #Initializing TokenTextSplitter, TitleExtractor
         text_splitter = SentenceSplitter(separator="\n",chunk_size=1024, chunk_overlap=20)
         title_extractor = TitleExtractor(nodes=5)
         #Initilizing the pipeline with the transformations parameter
-        pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, embed_model])
+        pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, load_embedding_model()])
         #Running the pipeline for storing the processed docuements in nodes
         #Initializing the PERSISTENT DIRECTORY path
         PERSIST_DIR = f"./storage/{folder_id}"
@@ -43,6 +43,8 @@ try:
             index = VectorStoreIndex(nodes,show_progress=True)
             # If Directory does not exist then create one and store the index
             index.storage_context.persist(persist_dir=PERSIST_DIR)
+            for i in document:
+                old_file_id.add(i.id_)
             print("Indexing of node done successfully.")
         else:
             # Reloading the index. If any new file gets uploaded in the Google Drive Folder then the file can be indexed

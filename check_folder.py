@@ -1,7 +1,7 @@
 import os
 #from config import config
 from google_drive_reader import load_data, load_new_data
-from gemini_llm import llm, embed_model
+from gemini_llm import load_Gemini, load_embedding_model
 from llama_index.core import StorageContext, load_index_from_storage, Settings
 from llama_index.core.extractors import TitleExtractor
 from llama_index.core.node_parser import SentenceSplitter
@@ -10,16 +10,16 @@ from llama_index.core.ingestion import IngestionPipeline
 def check_google_drive_folder(docs,folder_id):
     print("Folder Checking Started...") # print statement before fetching Index
     # Loading the index from PERSIST_DIR
-    """Fucntion to store and return the index using VectorStoreIndex"""
-    #Initializing the LLM model, embedding model and chunk size
-    Settings.llm = llm
-    Settings.embed_model = embed_model
-    Settings.chunk_size = 1024    
+    """Function to store and return the index using VectorStoreIndex"""
+    # Initializing the LLM model, embedding model and chunk size
+    Settings.llm = load_Gemini()
+    Settings.embed_model = load_embedding_model()
+    Settings.chunk_size = 1024
     #Initializing TokenTextSplitter, TitleExtractor
     text_splitter = SentenceSplitter(separator="\n",chunk_size=1024, chunk_overlap=20)
     title_extractor = TitleExtractor(nodes=5)
     #Initilizing the pipeline with the transformations parameter
-    pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, embed_model])
+    pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, load_embedding_model()])
     #Running the pipeline for storing the processed docuements in nodes
     #Initializing the PERSISTENT DIRECTORY path
     PERSIST_DIR = f"./storage/{folder_id}"
