@@ -256,10 +256,16 @@ Direct download link of Python 3.11.8: [Click to download from here](https://www
 
 7. Create a credentials.json from Google Cloud Console by creating a Service Account as mentioned in [Google Drive Integration](#google-cloud-credentials-for-google-drive-integration-with-llama-index)
 
-8. To run the Intelligent Document Finder system along with Signup and Login functionalities using JWT Authentication, execute the following command in the Git bash/Command Prompt/Powershell by activating the environment as mentioned above:
+8. `START THE SERVER` - To run the Intelligent Document Finder system along with Signup and Login functionalities using JWT Authentication, execute the following command in the Git bash/Command Prompt/Powershell by activating the environment as mentioned above:
 
     ```bash
     uvicorn api:app --reload
+    ```
+
+9. `START THE FRONTEND` - To start the streamlit application, type this command in a new Git bash:
+
+    ```bash
+    streamlit run stream.py
     ```
 
 
