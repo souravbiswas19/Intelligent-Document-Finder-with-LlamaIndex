@@ -20,3 +20,4 @@ passlib
 psycopg2
 bcrypt
 streamlit
+llama-index-readers-microsoft-onedrive
