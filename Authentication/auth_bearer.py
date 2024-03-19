@@ -5,12 +5,12 @@ from fastapi import FastAPI, Depends, HTTPException,status
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from Authentication.models import TokenTable
-from decouple import config
+from Authentication.configure import config
 import time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30  # 30 minutes
-ALGORITHM = config("ALGORITHM")
-JWT_SECRET_KEY = config("JWT_SECRET_KEY")   # should be kept secret
+ALGORITHM = config["ALGORITHM"]
+JWT_SECRET_KEY = config["JWT_SECRET_KEY"]   # should be kept secret
 
 def decodeJWT(jwtoken: str):
     try:

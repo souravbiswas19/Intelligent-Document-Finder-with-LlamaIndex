@@ -12,8 +12,9 @@ from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.ingestion import IngestionPipeline
 # Error Handling during storing of indexes
 try:
-    def load_index(folder_id):
-        PERSIST_DIR = f"./storage/{folder_id}"
+    def load_index():
+        PERSIST_DIR = "./storage"
+        Settings.embed_model = load_embedding_model()
         print("Index Loading Started...") # print statement before fetching Index
         # Loading the index from PERSIST_DIR
         storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
@@ -21,7 +22,7 @@ try:
         print("Index Loading Done")
         return index
     
-    def store_index(folder_id, document):
+    def store_index(document):
         """Fucntion to store and return the index using VectorStoreIndex"""
         #Initializing the LLM model, embedding model and chunk size
         Settings.llm = load_Gemini()
@@ -34,7 +35,7 @@ try:
         pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, load_embedding_model()])
         #Running the pipeline for storing the processed docuements in nodes
         #Initializing the PERSISTENT DIRECTORY path
-        PERSIST_DIR = f"./storage/{folder_id}"
+        PERSIST_DIR = "./storage"
         #Conditional statements to check if the Directory exists or not
         if not os.path.exists(PERSIST_DIR):
             # Converting the nodes into indexes
@@ -55,15 +56,6 @@ try:
                 old_file_id.add(i.id_)
             storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
             index = load_index_from_storage(storage_context)
-            # reloading the Google Drive Folder
-            # all_docs = load_data(folder_id=config['FOLDER_ID'])
-            # #finding the new files
-            # new_docs = load_new_data(docs, all_docs)
-            # # if new files are present then they are inserted into the index
-            # if new_docs:
-            #     print("New Files found. Indexing Started...") # print statement before fetching Index
-            #     new_nodes = pipeline.run(documents=new_docs, in_place=True, show_progress=True)
-            #     index.insert_nodes(new_nodes)
             print("Index Checking Successful.")
         return index
 except Exception as e:

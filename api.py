@@ -2,6 +2,7 @@ import os
 import rag_query
 from google_drive_reader import load_data
 from store_vector_index import store_index
+from onedrive_reader import read_onedrive
 from check_folder import check_google_drive_folder
 import Authentication.schemas as schemas
 import Authentication.models as models
@@ -68,8 +69,35 @@ def set_link(request: schemas.Link):
         docs = load_data(folder_id)
         print("Data loading Done.")
         document=docs
-        store_index(folder_id, docs)
+        store_index(docs)
         return {"Response": "Docs successfully loaded and Indexing done successfully"}
+    #Exception encountered if the pdf does not exist
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
+
+
+# @app.get("/getGoogleDriveData", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
+# def read_google_drive_data():
+#     """Query the function version."""
+#     try:
+#         folder_id=os.getenv("FOLDER_ID")
+#         print(folder_id)
+#         backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
+#         response = rag_query.generate_answer(question)
+#         #returns the answer after successful search from the pdf
+#         return {"answer": response}
+#     #Exception encountered if the pdf does not exist
+#     except Exception as e:
+#         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
+    
+@app.get("/getOnedriveData", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
+def read_onedrive_data():
+    """Query the function version."""
+    try:
+        docs = read_onedrive()
+        document=docs
+        store_index(docs)
+        return {"Response": "Docs successfully loaded from OneDrive and Indexing done successfully"}
     #Exception encountered if the pdf does not exist
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
@@ -79,10 +107,10 @@ def query(question: str):
     """Query the function version."""
     backgroundtask = BackgroundTasks()
     try:
-        folder_id=os.getenv("FOLDER_ID")
-        print(folder_id)
-        backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
-        response = rag_query.generate_answer(question,folder_id)
+        #folder_id=os.getenv("FOLDER_ID")
+        #print(folder_id)
+        #backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
+        response = rag_query.generate_answer(question)
         #returns the answer after successful search from the pdf
         return {"answer": response}
     #Exception encountered if the pdf does not exist

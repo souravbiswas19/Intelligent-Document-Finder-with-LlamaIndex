@@ -3,12 +3,12 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Union, Any
 import jwt
-from decouple import config
+from Authentication.configure import config
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRE_MINUTES = 600 * 24 * 7 # 7 days
-ALGORITHM = config("ALGORITHM")
-JWT_SECRET_KEY = config("JWT_SECRET_KEY")   # should be kept secret
+ALGORITHM = config["ALGORITHM"]
+JWT_SECRET_KEY = config["JWT_SECRET_KEY"]   # should be kept secret
 #JWT_REFRESH_SECRET_KEY = config("JWT_REFRESH_SECRET_KEY") 
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
