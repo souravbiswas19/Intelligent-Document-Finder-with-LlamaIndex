@@ -83,6 +83,7 @@ def read_google_drive_data():
         docs = load_all_data()
         # backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
         #returns the answer after successful search from the pdf
+        document=docs
         store_index(docs)
         return {"Response": "Docs successfully loaded from Google Drive and Indexing done successfully"}
     #Exception encountered if the pdf does not exist
