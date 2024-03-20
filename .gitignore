@@ -7,3 +7,7 @@ __pycache__/
 /Authentication/.env
 /Authentication/__pycache__/
 test.py
+google_drive_file_reader.ipynb
+gemini-idf-gdr.ipynb
+test.ipynb
+Authentication/text.ipynb
