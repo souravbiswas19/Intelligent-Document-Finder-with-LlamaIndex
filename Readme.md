@@ -295,7 +295,7 @@ Direct download link of Python 3.11.8: [Click to download from here](https://www
 
 ![Google Cloud Console Navigation Menu](/logos/Screenshot%20(16).png)
 
-3. Click on `+Enable APIs and Services`
+3. Click on ` + Enable APIs and Services`
 
 ![API and Services](/logos/Screenshot%20(17).png)
 
@@ -350,3 +350,35 @@ Direct download link of Python 3.11.8: [Click to download from here](https://www
 16. Create the key, download the JSON file and rename the JSON file as `credentials.json`. Put the `credentials.json` file inside the project directory.
 
 ![JSON File](/logos/Screenshot%20(31).png)
+
+# Create Google OAuth Client ID
+1. Go to Google Cloud Console
+
+2. Go to the `Navigation Menu` on the top left corner and choose `API and Services`.
+
+3. In the Credentials Dashboard, click on `+ CREATE CREDENTIALS`
+
+9. From the dropdown menu, click on `OAuth Client ID`.
+
+10. Select `Desktop App`
+
+10. Create a OAuth Client ID by providing the necessary details.
+
+11. Go to the Credentials Dashboard and in the OAuth Client ID Section go to the edit button.
+
+12. Download the json file.
+
+13. Rename the JSON file as driveaccess.json and the format is mentioned in the file driveaccess.json.examples file.
+
+15. Put the file in the project directory.
+
+# Microsoft Azure App Registration
+1. Register your app on Microsoft Azure from here [Microsoft Entra](https://entra.microsoft.com/?culture=en-in&country=in#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) 
+
+2. Provide App Name
+
+3. Select `Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)` option
+
+4. Select `Public client/native (mobile and desktop)` and provide *http://localhost* and *https://localhost* in the Redirect URI.
+
+5. Copy the Application (client) ID and paste it in the .env file
