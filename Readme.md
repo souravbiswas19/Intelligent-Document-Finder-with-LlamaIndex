@@ -104,19 +104,23 @@ behavior.
 
 ![Auth](/logos/Screenshot%20(44).png)
 
-8. Providing the Google Drive Link
+8. Get Google Drive Content Link
 
-![Set link](/logos/Screenshot%20(45).png)
+![Set link]()
 
-9. Output of Setting the Google Drive Link
+9. Get OneDrive Content Link
+
+![Set link]()
+
+10. Output of Setting the Google Drive Link
 
 ![Output](/logos/Screenshot%20(46).png)
 
-10. Querying 
+11. Querying 
 
 ![Query](/logos/Screenshot%20(48).png)
 
-11. Output after querying
+12. Output after querying
 
 ![Output](/logos/Screenshot%20(49).png)
 
@@ -124,15 +128,20 @@ behavior.
 The project structure consists of the following files:
 
 ### Document Finder Project
+- `api.py` - This python file contains the fastAPI app with API Endpoints.
+- `check_folder` - This python file contains the functions that checks if a new file has been added to the OneDrive or Google Drive.
 - `config.py`: This python file implements the env variables for API coniguration
+- `credentials.json`: This python file implements the Google Service Account credentials.
+- `driveaccess.json`: This python file implements the Google OAuth Client credentials
 - `extract_metadata.py`: This python file is for extraction of metadata
 - `gemini_llm.py`: This module is responsible for initializing LLM, Embedding and Prompts
-- `google_drive_reader.py`: This python module implements the access of files from the Google Drive Folder
+- `google_drive_reader.py`: This python module implements the access of files from the Google Drive
 - `instance_flag.py`: Store the instances of file id_ of new and old documents for checking which documents are uploaded recently
 - `main.py`: This a python file for frontend of the Intelligent Document Finder using LlamaIndex
+- `onedrive_reader.py` : This a python file for accessing the files from the Onedrive
 - `rag_query.py`: This python module performs query generation
 - `store_vector_index.py`: This python module performs the function of storing the vectors along with the implementation of TitleExtractor
-- `requirements.txt`: 
+- `requirements.txt`: Contains the necessary python libraries that are required to be installed before running the project.
 
 ### Login SignUP JWT Authentication
 **The File for the authentication system are present under the Authentication Folder**
@@ -151,6 +160,7 @@ The project structure consists of the following files:
     - **Parameters**: `user: schemas.UserCreate` for sending the user details and `session: Session = Depends(get_session)` for sending the database session
     - Output: For successful registration of users -  `user created successfully` is returned. Along with it Access Token is generated.  If email id already exists then `Email already registered` is returned.
     - **Description**: Takes up user details and database session as input and stores the details to the database, generates the access token and provides an output if the user is registered.
+
 - Login
     - **Method**: `POST`
     - **URL**: `/login`
@@ -158,12 +168,19 @@ The project structure consists of the following files:
     - **Output**: For successful login of users -  Login Successful is returned. If email id already exists then exception Incorrect mail id or incorrect password exception is raised
     - **Description**: Takes up user login details and database session as input and stores the details to the database and provides login successful message
 
-- Set Link
-    - **Method**: `POST`
-    - **URL**: `/setlink`
-    - **Parameters**: `link` for accessing the google drive folder along with it proper authentication is required using JWT Tokens
-    - **Output**: After data is loaded `Docs successfully loaded and Indexing done successfully`
-    - **Description**: Loads the data from the google drive folder and indexes it.
+- Get GoogleDrive Data
+    - **Method**: `GET`
+    - **URL**: `/getGoogleDriveData`
+    - **Parameters**: `link` for accessing the google drive along with it proper authentication is required using JWT Tokens and Google Authentication
+    - **Output**: After data is loaded `Docs successfully loaded from GoogleDrive and Indexing done successfully`
+    - **Description**: Loads the data from the google drive and indexes it.
+
+- Get OneDrive Data
+    - **Method**: `GET`
+    - **URL**: `/getOnedriveData`
+    - **Parameters**: `link` for accessing the Onedrive along with it proper authentication is required using JWT Tokens and Microsoft Authentication
+    - **Output**: After data is loaded `Docs successfully loaded from OneDrive and Indexing done successfully`
+    - **Description**: Loads the data from the OneDrive and indexes it.
 
 - Get the response from llm
     - **Method**: `POST`

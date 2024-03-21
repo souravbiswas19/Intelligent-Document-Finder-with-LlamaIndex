@@ -71,6 +71,8 @@ def load_all_data():
         for file in all_files:
             document_id.append(file["id"])
         docs = loader.load_data(file_ids=document_id)
+        for i in docs:
+            old_file_id.add(i.id_)
         return docs
     except HttpError as error:
         raise HttpError
