@@ -1,4 +1,5 @@
 from config import config
+from instance_flag import old_file_id
 from llama_index.readers.microsoft_onedrive import OneDriveReader
 
 def read_onedrive():
@@ -9,4 +10,6 @@ def read_onedrive():
     # User Authentication flow: Replace client id with your own id
     loader = OneDriveReader(client_id=client_id)
     documents = loader.load_data()
+    for i in documents:
+        old_file_id.add(i.id_)
     return documents

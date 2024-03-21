@@ -52,10 +52,10 @@ try:
             #storing the reloaded index
             print("Index Checking Started...") # print statement before fetching Index
             # Loading the index from PERSIST_DIR
-            nodes = pipeline.run(documents=document, in_place=True, show_progress=True)
-            index = VectorStoreIndex(nodes,show_progress=True)
+            # nodes = pipeline.run(documents=document, in_place=True, show_progress=True)
+            # index = VectorStoreIndex(nodes,show_progress=True)
             # If Directory does not exist then create one and store the index
-            index.storage_context.persist(persist_dir=PERSIST_DIR)
+            # index.storage_context.persist(persist_dir=PERSIST_DIR)
             for i in document:
                 old_file_id.add(i.id_)
             storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)

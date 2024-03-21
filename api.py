@@ -1,9 +1,10 @@
 import os
 import rag_query
+import threading
 from google_drive_reader import load_data, load_all_data
 from store_vector_index import store_index
 from onedrive_reader import read_onedrive
-from check_folder import check_google_drive_folder
+from check_folder import check_google_drive_folder, check_onedrive_folder
 import Authentication.schemas as schemas
 import Authentication.models as models
 from Authentication.models import User
@@ -21,8 +22,28 @@ def get_session():
         yield session
     finally:
         session.close()
-document=[]
+
+document_google=[]
+document_onedrive=[]
 app=FastAPI()
+
+def start_check_google_drive_thread(docs):
+    """
+    This function starts a new thread to execute
+    check_folder function infinitely.
+    """
+    t = threading.Thread(target=check_google_drive_folder, args=(docs,))
+    t.daemon = True  # Daemon thread so it automatically closes when the main thread (uvicorn server) exits
+    t.start()
+
+def start_check_onedrive_thread(docs):
+    """
+    This function starts a new thread to execute
+    check_folder2 function infinitely.
+    """
+    t = threading.Thread(target=check_onedrive_folder, args=(docs,))
+    t.daemon = True  # Daemon thread so it automatically closes when the main thread (uvicorn server) exits
+    t.start()
 
 @app.post("/register", status_code=status.HTTP_201_CREATED)
 def register_user(user: schemas.UserCreate, session: Session = Depends(get_session)):
@@ -57,23 +78,23 @@ def login(request: schemas.Logindetails, db: Session = Depends(get_session), ):
         "access_token": access
     }
 
-@app.post("/setlink", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
-def set_link(request: schemas.Link):
-    """Query the function version."""
-    format_google = "https://drive.google.com/drive/folders/"
-    folder_id = request.link[-(len(request.link)-len(format_google)):]
-    os.environ["FOLDER_ID"]=folder_id
-    try:
-        folder_id=os.getenv("FOLDER_ID")
-        print("Data loading Google Drive...")
-        docs = load_data(folder_id)
-        print("Data loading Done.")
-        document=docs
-        store_index(docs)
-        return {"Response": "Docs successfully loaded and Indexing done successfully"}
-    #Exception encountered if the pdf does not exist
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
+# @app.post("/setlink", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
+# def set_link(request: schemas.Link):
+#     """Query the function version."""
+#     format_google = "https://drive.google.com/drive/folders/"
+#     folder_id = request.link[-(len(request.link)-len(format_google)):]
+#     os.environ["FOLDER_ID"]=folder_id
+#     try:
+#         folder_id=os.getenv("FOLDER_ID")
+#         print("Data loading Google Drive...")
+#         docs = load_data(folder_id)
+#         print("Data loading Done.")
+#         document=docs
+#         store_index(docs)
+#         return {"Response": "Docs successfully loaded and Indexing done successfully"}
+#     #Exception encountered if the pdf does not exist
+#     except Exception as e:
+#         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
 
 
 @app.get("/getGoogleDriveData", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
@@ -83,7 +104,7 @@ def read_google_drive_data():
         docs = load_all_data()
         # backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
         #returns the answer after successful search from the pdf
-        document=docs
+        document_google=docs
         store_index(docs)
         return {"Response": "Docs successfully loaded from Google Drive and Indexing done successfully"}
     #Exception encountered if the pdf does not exist
@@ -95,7 +116,7 @@ def read_onedrive_data():
     """Query the function version."""
     try:
         docs = read_onedrive()
-        document=docs
+        document_onedrive=docs
         store_index(docs)
         return {"Response": "Docs successfully loaded from OneDrive and Indexing done successfully"}
     #Exception encountered if the pdf does not exist
@@ -105,11 +126,12 @@ def read_onedrive_data():
 @app.post("/getquery", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
 def query(question: str):
     """Query the function version."""
-    backgroundtask = BackgroundTasks()
+    background=BackgroundTasks()
     try:
-        #folder_id=os.getenv("FOLDER_ID")
-        #print(folder_id)
-        #backgroundtask.add_task(check_google_drive_folder(docs=document, folder_id=folder_id))
+        #start_check_google_drive_thread(document_google)
+        #start_check_onedrive_thread(document_onedrive)
+        background.add_task(check_google_drive_folder(docs=document_google))
+        background.add_task(check_onedrive_folder(docs=document_onedrive))
         response = rag_query.generate_answer(question)
         #returns the answer after successful search from the pdf
         return {"answer": response}
