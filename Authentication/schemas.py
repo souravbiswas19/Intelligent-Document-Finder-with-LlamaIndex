@@ -26,3 +26,6 @@ class TokenCreate(BaseModel):
 
 class Link(BaseModel):
     link:str = Field(default=None)
+
+class Question(BaseModel):
+    question:str = Field(default=None)
