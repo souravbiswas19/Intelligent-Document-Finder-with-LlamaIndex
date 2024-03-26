@@ -119,7 +119,7 @@ def read_onedrive_data():
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(e)) from e
 
 @app.post("/getquery", dependencies=[Depends(JWTBearer())], status_code=status.HTTP_202_ACCEPTED)
-def query(question: str):
+def query(question: schemas.Question):
     """Query the function version."""
     background=BackgroundTasks()
     try:
@@ -127,7 +127,7 @@ def query(question: str):
         threading.Timer(0, start_check_onedrive_thread, args=(document_onedrive,)).start()
         # background.add_task(check_google_drive_folder(docs=document_google))
         # background.add_task(check_onedrive_folder(docs=document_onedrive))
-        response = rag_query.generate_answer(question)
+        response = rag_query.generate_answer(question.question)
         #returns the answer after successful search from the pdf
         return {"answer": response}
     #Exception encountered if the pdf does not exist
