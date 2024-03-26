@@ -282,7 +282,7 @@ Direct download link of Python 3.11.8: [Click to download from here](https://www
 9. `START THE FRONTEND` - To start the streamlit application, type this command in a new Git bash:
 
     ```bash
-    streamlit run stream.py
+    streamlit run frontend/main.py
     ```
 
 
