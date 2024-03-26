@@ -32,18 +32,14 @@ def start_check_google_drive_thread(docs):
     This function starts a new thread to execute
     check_folder function infinitely.
     """
-    t = threading.Thread(target=check_google_drive_folder, args=(docs,))
-    t.daemon = True  # Daemon thread so it automatically closes when the main thread (uvicorn server) exits
-    t.start()
+    threading.Timer(30, check_google_drive_folder, args=(docs,)).start()
 
 def start_check_onedrive_thread(docs):
     """
     This function starts a new thread to execute
     check_folder2 function infinitely.
-    """
-    t = threading.Thread(target=check_onedrive_folder, args=(docs,))
-    t.daemon = True  # Daemon thread so it automatically closes when the main thread (uvicorn server) exits
-    t.start()
+    """# Daemon thread so it automatically closes when the main thread (uvicorn server) exits
+    threading.Timer(30, check_onedrive_folder, args=(docs,)).start()
 
 @app.post("/register", status_code=status.HTTP_201_CREATED)
 def register_user(user: schemas.UserCreate, session: Session = Depends(get_session)):
@@ -69,7 +65,6 @@ def login(request: schemas.Logindetails, db: Session = Depends(get_session), ):
             detail="Incorrect password"
         )    
     access=create_access_token(user.id)
-    #refresh = create_refresh_token(user.id)
     token_db = models.TokenTable(user_id=user.id,  access_token=access)
     db.add(token_db)
     db.commit()
@@ -128,10 +123,10 @@ def query(question: str):
     """Query the function version."""
     background=BackgroundTasks()
     try:
-        #start_check_google_drive_thread(document_google)
-        #start_check_onedrive_thread(document_onedrive)
-        background.add_task(check_google_drive_folder(docs=document_google))
-        background.add_task(check_onedrive_folder(docs=document_onedrive))
+        threading.Timer(0, start_check_google_drive_thread, args=(document_google,)).start()
+        threading.Timer(0, start_check_onedrive_thread, args=(document_onedrive,)).start()
+        # background.add_task(check_google_drive_folder(docs=document_google))
+        # background.add_task(check_onedrive_folder(docs=document_onedrive))
         response = rag_query.generate_answer(question)
         #returns the answer after successful search from the pdf
         return {"answer": response}
